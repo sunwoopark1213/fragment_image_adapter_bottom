@@ -1,5 +1,6 @@
 package com.example.fragment_image_adapter_bottom;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,6 +32,18 @@ public class HomeFragment extends Fragment {
         // 이미지 뷰 설정
         homeImage = view.findViewById(R.id.home_image);
         homeImage.setImageResource(R.drawable.ic_home);
+
+        // 이미지 클릭 시 다이얼로그 표시
+        homeImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle("이미지 클릭됨")
+                        .setMessage("이미지를 클릭했습니다.")
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show();
+            }
+        });
 
         // 리스트 뷰 설정
         listView = view.findViewById(R.id.list_view);
