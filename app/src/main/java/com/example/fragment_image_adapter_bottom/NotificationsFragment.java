@@ -16,11 +16,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+/**
+ * NotificationsFragment는 리스트 뷰와 스와이프 새로고침을 포함합니다.
+ */
 public class NotificationsFragment extends Fragment {
 
     private ListView listView;
     private ArrayAdapter<String> adapter;
-    private String[] items = {"Notification Item 1", "Notification Item 2", "Notification Item 3"};
+    private String[] items = {"알림 항목 1", "알림 항목 2", "알림 항목 3"};
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
@@ -28,19 +31,15 @@ public class NotificationsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notifications, container, false);
 
-        // Bundle에서 데이터 읽어오기
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            String extraData = bundle.getString("extraData");
-            // extraData 사용
-        }
-
+        // 스와이프 새로고침 레이아웃 설정
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         listView = view.findViewById(R.id.list_view);
 
+        // 리스트 뷰 설정
         adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, items);
         listView.setAdapter(adapter);
 
+        // 리스트 항목 클릭 시 상세 보기 액티비티로 전환
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -50,30 +49,30 @@ public class NotificationsFragment extends Fragment {
             }
         });
 
+        // 리스트 항목 길게 클릭 시 다이얼로그 표시
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 new AlertDialog.Builder(getContext())
-                        .setTitle("Item Long Clicked")
-                        .setMessage("You long-clicked: " + items[position])
+                        .setTitle("항목 길게 클릭됨")
+                        .setMessage("길게 클릭한 항목: " + items[position])
                         .setPositiveButton(android.R.string.ok, null)
                         .show();
                 return true;
             }
         });
 
+        // 스와이프 새로고침 동작 설정
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // 새로고침 작업을 여기서 수행합니다.
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(false);
-                        // 예: 데이터를 다시 로드하거나 업데이트
                         adapter.notifyDataSetChanged();
                     }
-                }, 2000); // 2초 동안 새로고침 상태 유지
+                }, 2000);
             }
         });
 

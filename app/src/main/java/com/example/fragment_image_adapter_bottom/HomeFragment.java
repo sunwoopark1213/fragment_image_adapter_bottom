@@ -14,10 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+/**
+ * HomeFragment는 이미지와 리스트 뷰를 포함합니다.
+ */
 public class HomeFragment extends Fragment {
 
     private ListView listView;
-    private String[] items = {"Item 1", "Item 2", "Item 3"};
+    private String[] items = {"홈 항목 1", "홈 항목 2", "홈 항목 3"};
     private ImageView homeImage;
 
     @Nullable
@@ -25,14 +28,16 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // ImageView 설정
+        // 이미지 뷰 설정
         homeImage = view.findViewById(R.id.home_image);
         homeImage.setImageResource(R.drawable.ic_home);
 
+        // 리스트 뷰 설정
         listView = view.findViewById(R.id.list_view);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, items);
         listView.setAdapter(adapter);
 
+        // 리스트 항목 클릭 시 상세 보기 액티비티로 전환
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

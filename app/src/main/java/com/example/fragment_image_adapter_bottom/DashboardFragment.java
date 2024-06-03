@@ -13,16 +13,20 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * DashboardFragment는 리사이클러 뷰를 포함합니다.
+ */
 public class DashboardFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private String[] items = {"Dashboard Item 1", "Dashboard Item 2", "Dashboard Item 3"};
+    private String[] items = {"대시보드 항목 1", "대시보드 항목 2", "대시보드 항목 3"};
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
+        // 리사이클러 뷰 설정
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -53,7 +57,7 @@ public class DashboardFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), DetailActivity.class);
-                    intent.putExtra("item", data[position]);
+                    intent.putExtra("item", data[holder.getAdapterPosition()]);
                     startActivity(intent);
                 }
             });
